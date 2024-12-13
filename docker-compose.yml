@@ -1,0 +1,10 @@
+services:
+  db-mysql:
+    image: mysql:5.7.40
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=lab5
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "3307:3306"
+#docker compose -f docker-compose.yml -p nodejs-sql-lab5 up -d
