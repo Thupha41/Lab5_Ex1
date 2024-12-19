@@ -1,5 +1,4 @@
 const mysql = require("mysql2/promise");
-require("dotenv").config();
 const Sequelize = require("sequelize");
 const {
   development: { host, username, password, database, port, dialect },
