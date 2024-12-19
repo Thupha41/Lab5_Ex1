@@ -128,3 +128,19 @@ export const deleteUserValidator = validate(
     ["params"]
   )
 );
+
+export const emailValidator = validate(
+  checkSchema(
+    {
+      email: {
+        notEmpty: {
+          errorMessage: USERS_MESSAGES.EMAIL_IS_REQUIRED,
+        },
+        isEmail: {
+          errorMessage: USERS_MESSAGES.EMAIL_IS_INVALID,
+        },
+      },
+    },
+    ["body"]
+  )
+);

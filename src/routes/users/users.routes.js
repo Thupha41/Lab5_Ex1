@@ -3,6 +3,7 @@ import {
   createUserValidator,
   updateUserValidator,
   deleteUserValidator,
+  emailValidator,
 } from "../../middlewares/users.middlewares";
 import { wrapRequestHandler } from "../../utils/handlers";
 import userController from "../../controllers/users.controllers";
@@ -50,5 +51,17 @@ usersRouter.delete(
   "/delete/:id",
   deleteUserValidator,
   wrapRequestHandler(userController.deleteUser)
+);
+
+/**
+ * Description: Send email to user
+ * Path: /send-email
+ * method: POST
+ * Body: {email: string}
+ */
+usersRouter.post(
+  "/send-email",
+  emailValidator,
+  wrapRequestHandler(userController.sendEmail)
 );
 export default usersRouter;

@@ -37,4 +37,7 @@ export const USERS_MESSAGES = {
   CART_ITEM_NOT_FOUND: "Cart item not found.",
   QUANTITY_IS_REQUIRED: "Quantity is required.",
   QUANTITY_MUST_BE_POSITIVE_INTEGER: "Quantity must be a positive integer.",
+  EMAIL_SENT_SUCCESS: "Sending email successfully",
+  EMAIL_IS_REQUIRED: "Email is required",
+  EMAIL_IS_INVALID: "Email is invalid",
 };
