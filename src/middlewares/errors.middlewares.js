@@ -1,11 +1,18 @@
 import { omit } from "lodash";
 import HTTP_STATUS from "../constants/httpStatus";
 import { ErrorWithStatus } from "../utils/Error";
-
+import { formatResponse } from "../utils/response";
 const defaultErrorHandler = (err, req, res, next) => {
   try {
+    const action = req.method;
+
     if (err instanceof ErrorWithStatus) {
-      res.status(err.status).json(omit(err, ["status"]));
+      res.status(err.status).json(
+        formatResponse(action, "errors", {
+          message: err.message,
+          errors: err.errors || {},
+        })
+      );
       return;
     }
 
@@ -19,15 +26,23 @@ const defaultErrorHandler = (err, req, res, next) => {
     });
 
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-      message: finalError.message,
-      errorInfo: omit(finalError, ["stack"]),
+      action,
+      status: "errors",
+      "User/Product/ShoppingCart": {
+        message: finalError.message || "Internal server error",
+        errors: omit(finalError, ["stack"]),
+      },
     });
   } catch (error) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-      message: "Internal server error",
-      errorInfo: omit(error, ["stack"]),
+      action: req.method,
+      status: "error",
+      "User/Product/ShoppingCart": {
+        message: "Internal server error",
+        errors: {},
+      },
     });
   }
 };
 
-module.exports = defaultErrorHandler;
+export default defaultErrorHandler;
