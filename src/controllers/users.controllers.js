@@ -7,6 +7,7 @@ import * as fs from "fs";
 import * as path from "path";
 import nodemailer from "nodemailer";
 import { formatResponse } from "../utils/response";
+import ImportServices from "../services/ORM/import.services";
 import axios from "axios";
 dotenv.config();
 
@@ -106,36 +107,19 @@ const sendEmail = async (req, res) => {
 };
 
 const importUsers = async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    const apiUsers = response.data;
+  const response = await axios.get(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+  const apiUsers = response.data;
 
-    // Map API users to our database schema
-    const mappedUsers = apiUsers.map((apiUser) => ({
-      fullName: apiUser.name,
-      address: `${apiUser.address.street}, ${apiUser.address.suite}, ${apiUser.address.city}, ${apiUser.address.zipcode}`,
-      registrationDate: new Date(),
-    }));
+  const result = await ImportServices.import(apiUsers);
 
-    // Save all users to database
-    const result = await UserServiceORM.bulkCreate(mappedUsers);
-
-    res.json(
-      formatResponse(req.method, res.statusCode, {
-        message: USERS_MESSAGES.IMPORT_USERS_SUCCESS,
-        data: result,
-      })
-    );
-  } catch (error) {
-    res.status(500).json(
-      formatResponse(req.method, 500, {
-        message: error.message,
-        data: null,
-      })
-    );
-  }
+  res.json(
+    formatResponse(req.method, res.statusCode, {
+      message: USERS_MESSAGES.IMPORT_USERS_SUCCESS,
+      data: result,
+    })
+  );
 };
 
 module.exports = {

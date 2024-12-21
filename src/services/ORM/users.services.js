@@ -10,8 +10,7 @@ class UserServiceORM {
   };
 
   static create = async (data) => {
-    const users = await db.User.create(data);
-    return users;
+    return await db.User.create(data);
   };
 
   static update = async (data) => {
@@ -35,10 +34,6 @@ class UserServiceORM {
     });
     return result;
   };
-
-  static async bulkCreate(users) {
-    return await db.User.bulkCreate(users);
-  }
 }
 
 export default UserServiceORM;

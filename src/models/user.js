@@ -13,6 +13,16 @@ module.exports = (sequelize, DataTypes) => {
         through: "ShoppingCart",
         foreignKey: "userId",
       });
+
+      User.belongsTo(models.Address, {
+        through: "Address",
+        foreignKey: "address_id",
+      });
+
+      User.belongsTo(models.Company, {
+        through: "Company",
+        foreignKey: "company_id",
+      });
     }
   }
   User.init(
@@ -20,6 +30,24 @@ module.exports = (sequelize, DataTypes) => {
       fullName: DataTypes.STRING,
       address: DataTypes.STRING,
       registrationDate: DataTypes.DATE,
+      username: DataTypes.STRING,
+      address_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Address",
+          key: "id",
+        },
+      },
+      phone: DataTypes.STRING,
+      website: DataTypes.STRING,
+      email: DataTypes.STRING,
+      company_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Company",
+          key: "id",
+        },
+      },
     },
     {
       sequelize: sequelize,
