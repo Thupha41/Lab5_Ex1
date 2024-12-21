@@ -2,6 +2,7 @@ import { omit } from "lodash";
 import HTTP_STATUS from "../constants/httpStatus";
 import { ErrorWithStatus } from "../utils/Error";
 import { formatResponse } from "../utils/response";
+import { MulterError } from "multer";
 const defaultErrorHandler = (err, req, res, next) => {
   try {
     const action = req.method;
@@ -15,7 +16,19 @@ const defaultErrorHandler = (err, req, res, next) => {
       );
       return;
     }
-
+    if (err instanceof MulterError) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json(
+        formatResponse(action, "errors", {
+          message: "File upload error",
+          errors: {
+            name: "MulterError",
+            message: err.message,
+            code: err.code,
+            storageErrors: err.storageErrors || [],
+          },
+        })
+      );
+    }
     const finalError = {};
     Object.getOwnPropertyNames(err).forEach((key) => {
       const descriptor = Object.getOwnPropertyDescriptor(err, key);

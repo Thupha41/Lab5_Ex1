@@ -41,4 +41,6 @@ export const USERS_MESSAGES = {
   EMAIL_IS_REQUIRED: "Email is required",
   EMAIL_IS_INVALID: "Email is invalid",
   IMPORT_USERS_SUCCESS: "Users imported successfully",
+  UPLOAD_IMAGE_SUCCESS: "Upload image successfully",
+  GET_LIST_IMAGES_SUCCESS: "Get list images successfully",
 };
