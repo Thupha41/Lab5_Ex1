@@ -35,6 +35,10 @@ class UserServiceORM {
     });
     return result;
   };
+
+  static async bulkCreate(users) {
+    return await db.User.bulkCreate(users);
+  }
 }
 
 export default UserServiceORM;

@@ -40,4 +40,5 @@ export const USERS_MESSAGES = {
   EMAIL_SENT_SUCCESS: "Sending email successfully",
   EMAIL_IS_REQUIRED: "Email is required",
   EMAIL_IS_INVALID: "Email is invalid",
+  IMPORT_USERS_SUCCESS: "Users imported successfully",
 };

@@ -64,4 +64,15 @@ usersRouter.post(
   emailValidator,
   wrapRequestHandler(userController.sendEmail)
 );
+
+/**
+ * Description: Import users from external API
+ * Path: /import
+ * method: POST
+ */
+usersRouter.post(
+  "/import",
+  wrapRequestHandler(userController.importUsers)
+);
+
 export default usersRouter;
